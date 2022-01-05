@@ -43,7 +43,7 @@ $("#tbl").ready(function () {
             td5.innerHTML = response[i].kelas
             td6.innerHTML = `<div class ="justify content-center">
             <a class="btn btn-warning ms-2" href="edit.html?kode=${response[i].kode}">Edit </a>
-            <button type ="button" class="btn btn-danger ms-2" onclick="del(${response[i].kode});">Delete</button>
+            <button type ="button" class="btn btn-danger ms-2" onclick="del(${response[i].nim});">Delete</button>
             </div>`
             }
         }

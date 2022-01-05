@@ -17,3 +17,8 @@ body {
 #updateForm, #newForm {
     display: none;
 }
+
+.btn-kembali {
+    background-color: #5c2183;
+    color: #ffffff;
+}

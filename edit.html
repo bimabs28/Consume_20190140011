@@ -26,40 +26,41 @@
         </div>
       </nav>    
 
-    <section>
+      <section>
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <a class="btn btn-success ms-2 mt-5" href="add.html">Tambahkan Data</a>
-                    <table id="tbl" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>
-                                    NIM
-                                </th>
-                                <th>
-                                    Nama
-                                </th>
-                                <th>
-                                    Prodi
-                                </th>
-                                <th>
-                                    JenisKelamin
-                                </th>
-                                <th>
-                                    Kelas
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+            <form>
+                <div class="row">
+                    <div class="form-group my-3">
+                      <label for="nim" class="form-label">NIM</label>
+                      <input type="text" class="form-control" id="nim" placeholder="Masukkan NIM">
+                    </div>
+                    <div class="form-group my-3">
+                      <label for="nama" class="form-label">Nama</label>
+                      <input type="text" class="form-control" id="nama" placeholder="Masukkan Nama">
+                    </div>
+                    <div class="form-group my-3">
+                      <label for="prodi" class="form-label">Prodi</label>
+                      <input type="text" class="form-control" id="prodi" placeholder="Masukkan Prodi">
+                    </div>
+                    <div class="form-group my-3">
+                      <label for="jeniskelamin" class="form-label">JenisKelamin</label>
+                      <input type="text" class="form-control" id="jeniskelamin" placeholder="Masukkan JenisKelamin">
+                    </div>
+                    <div class="form-group my-3">
+                      <label for="kelas" class="form-label">Kelas</label>
+                      <input type="text" class="form-control" id="kelas" placeholder="Masukkan Kelas">
+                    </div>
+                    <button type="button" class="btn btn-kembali ms-2 mt-4" onclick="return window.location.href='./data.html'">Back</button>
+                    <button type="button" class="btn btn-success ms-2 mt-4" onclick="saveData();">Save Data</button>
+              </div>  
+            </form>
             </div>
-        </div>
+        </div> 
     </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="axiosService.js"></script>
+    <script src="service.js"></script>
     <script src="./index.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     <script>
@@ -83,18 +84,50 @@
         })
     }
 
-    function del(NIM){
-        if (window.confirm("Apakah anda ingin menghapus data?")===true) {
-            axios.delete(`http://localhost:8080/data/mahasiswa/${NIM}`).then((result) => {
-                alert("hapus data berhasil")
-                window.location.href="/data.html"
-            }).catch((err) => {
-                console.log(err)
-            });
-        }
+    function saveData(){
+    var body = {
+      nim:$("#nim").val(),
+      nama:$("#nama").val(),
+      prodi:$("#prodi").val(),
+      jeniskelamin:$("#jeniskelamin").val(),
+      kelas:$("#kelas").val()
+    }
+    var json = JSON.stringify(body)
+    console.log(json)
+    axios({
+        method:"put",
+        url:url, 
+        data:json, 
+        headers:{ "Content-Type": "application/json" }
+    })
+    .then((result) => {
+        console.log("Data Berhasil di Ubah")
+        window.location.href="/data.html"   
+    }).catch((err) => {
+        console.log(error)
+    });
+    }
+
+    function getData(){
+        var url = new URL($(location).attr("href"))
+        var params = url.searchParams.get("nim")
+        console.log(params)
+        axios.get(
+            `http://localhost:8080/data/mahasiswa/${params}`
+        ).then((result) => {
+            console.log(result)
+            $("#nim").val(result.data.nim);
+            $("#nama").val(result.data.nama);
+            $("#prodi").val(result.data.prodi);
+            $("#jeniskelamin").val(result.data.jeniskelamin);
+            $("#kelas").val(result.data.kelas)
+        }).catch((err) => {
+            console.log(error)
+        });
     }
 
     var url ="http://localhost:8080/data/mahasiswa";
+    getData()
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
