@@ -32,17 +32,14 @@ $("#tbl").ready(function () {
             const td5 = tr.insertCell();
             const td6 = tr.insertCell();
             console.log(response[i])
-                // const aksi = tr. document.getElementById("tbl-aksi")
-                // aksi.innerHTML = 
-                
-                // td.innerHTML = response[i][Object.keys(response[i])[j]];
+            
             td1.innerHTML = response[i].nim
             td2.innerHTML = response[i].nama
             td3.innerHTML = response[i].prodi
             td4.innerHTML = response[i].jeniskelamin
             td5.innerHTML = response[i].kelas
             td6.innerHTML = `<div class ="justify content-center">
-            <a class="btn btn-warning ms-2" href="edit.html?kode=${response[i].kode}">Edit </a>
+            <a class="btn btn-warning ms-2" href="edit.html?kode=${response[i].nim}">Edit </a>
             <button type ="button" class="btn btn-danger ms-2" onclick="del(${response[i].nim});">Delete</button>
             </div>`
             }
