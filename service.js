@@ -11,6 +11,19 @@ function getAll(){
     // });
 }
 
+function getbynim(data){
+	const respon = axios.get("http://localhost:8080/data/mahasiswa/${nim}", data)
+	// const dr = respon.then(resp => resp.data)
+	// return dr
+	.then((result) => {
+		console.log(result)
+		return result.data
+	}).catch((err) => {
+			console.error(err)
+	});
+
+}
+
 async function create(data){
     await axios.post("http://localhost:8080/data/mahasiswa", data)
     .then((result) => {
